@@ -1,4 +1,4 @@
-// Copyright 2021 Takagi, Isamu
+// Copyright 2022 Takagi, Isamu
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,19 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <generic_type_support/generic_type_support.hpp>
-#include <gtest/gtest.h>
+#include <generic_type_utility/generic_type_utility.hpp>
+#include <iostream>
 
-/*
-TEST(generic_type_support, test1)
+int main()
 {
-  const auto support = generic_type_support::TypeSupportMessage("std_msgs/msg/Header");
-  const auto message = support.GetClass();
-}
-*/
+  using GenericMessage = generic_type_utility::GenericMessage;
+  using FieldError = generic_type_utility::FieldError;
 
-int main(int argc, char ** argv)
-{
-  testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+  try
+  {
+    const auto message_ = std::make_shared<GenericMessage>("std_msgs/msg/Header");
+    const auto access_ = message_->GetAccess("stamp.msec");
+  }
+  catch (const FieldError & error)
+  {
+    std::cout << "ERROR: " << error.what() << std::endl;
+  }
 }

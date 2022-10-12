@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-project(generic_type_support)
+project(generic_type_utility)
 
 if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 17)
@@ -14,7 +14,7 @@ find_package(ament_cmake_auto REQUIRED)
 ament_auto_find_build_dependencies()
 
 ament_auto_add_library(${PROJECT_NAME} SHARED
-  src/generic_type_support.cpp
+  src/generic_type_utility.cpp
   src/impl/library.cpp
   src/impl/message.cpp
   src/impl/field.cpp

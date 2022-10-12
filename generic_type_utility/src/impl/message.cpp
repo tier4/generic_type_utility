@@ -14,9 +14,9 @@
 
 #include "message.hpp"
 #include "field.hpp"
-#include <generic_type_support/errors.hpp>
+#include <generic_type_utility/errors.hpp>
 
-namespace generic_type_support
+namespace generic_type_utility
 {
 
 TypeSupportMessage::TypeSupportMessage(const IntrospectionMessage * message)
@@ -91,4 +91,4 @@ void TypeSupportClass::Dump() const
 }
 */
 
-}  // namespace generic_type_support
+}  // namespace generic_type_utility

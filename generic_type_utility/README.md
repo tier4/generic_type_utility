@@ -1,4 +1,4 @@
-# generic_type_support
+# generic_type_utility
 
 This package makes it easy to access the data in the `rclcpp::SerializedMessage`. See the example code.
 

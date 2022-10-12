@@ -16,7 +16,7 @@
 #include "message.hpp"
 #include <string>
 
-namespace generic_type_support
+namespace generic_type_utility
 {
 
 constexpr char typesupport_identifier[] = "rosidl_typesupport_cpp";
@@ -56,4 +56,4 @@ rclcpp::SerializationBase TypeSupportLibrary::CreateSerialization() const
   throw TypeSupportIdentifierError(handle_->typesupport_identifier);
 }
 
-}  // namespace generic_type_support
+}  // namespace generic_type_utility

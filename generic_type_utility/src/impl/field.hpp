@@ -12,33 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef IMPL__MESSAGE_HPP_
-#define IMPL__MESSAGE_HPP_
+#ifndef IMPL__FIELD_HPP_
+#define IMPL__FIELD_HPP_
 
 #include "util/types.hpp"
 #include <string>
 #include <vector>
 
-namespace generic_type_support
+namespace generic_type_utility
 {
 
-class TypeSupportMessage
+class TypeSupportField
 {
 public:
-  explicit TypeSupportMessage(const IntrospectionMessage * message);
-  explicit TypeSupportMessage(const IntrospectionHandle * handle);
-  ~TypeSupportMessage();
+  explicit TypeSupportField(const IntrospectionField * field);
+  const std::string GetDataName() const;
   const std::string GetTypeName() const;
-  const std::vector<TypeSupportField> & GetFields() const;
-  const TypeSupportField GetField(const std::string name) const;
-  void CreateMemory(void *& data) const;
-  void DeleteMemory(void *& data) const;
+  uint32_t GetMemoryOffset() const;
+  uint8_t GetTypeID() const;
+
+  bool IsMessage() const;
+  TypeSupportMessage GetMessage() const;
+
+  bool IsArray() const;
+  std::vector<const void *> GetConstArray(const void * data) const;
 
 private:
-  const IntrospectionMessage * message_;
-  std::vector<TypeSupportField> fields_;
+  const IntrospectionField * field_;
 };
 
-}  // namespace generic_type_support
+}  // namespace generic_type_utility
 
-#endif  // IMPL__MESSAGE_HPP_
+#endif  // IMPL__FIELD_HPP_

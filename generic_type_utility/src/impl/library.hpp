@@ -21,7 +21,7 @@
 #include <memory>
 #include <string>
 
-namespace generic_type_support
+namespace generic_type_utility
 {
 
 class TypeSupportLibrary
@@ -38,6 +38,6 @@ private:
   std::shared_ptr<rcpputils::SharedLibrary> library_;
 };
 
-}  // namespace generic_type_support
+}  // namespace generic_type_utility
 
 #endif  // IMPL__LIBRARY_HPP_

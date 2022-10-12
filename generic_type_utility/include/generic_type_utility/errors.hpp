@@ -12,20 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef IMPL__CONVERT_HPP_
-#define IMPL__CONVERT_HPP_
+#ifndef GENERIC_TYPE_UTILITY__ERRORS_HPP_
+#define GENERIC_TYPE_UTILITY__ERRORS_HPP_
 
-#include "util/types.hpp"
-#include <yaml-cpp/yaml.h>
+#include <stdexcept>
 
-namespace generic_type_support
+namespace generic_type_utility
 {
 
-YAML::Node GetMessageYAML(const TypeSupportMessage & message, const void * data);
-YAML::Node GetFieldYAML(const TypeSupportField & field, const void * data);
-YAML::Node GetFieldArray(const TypeSupportField & field, const void * data);
-YAML::Node GetFieldValue(const TypeSupportField & field, const void * data);
+class FieldError : public std::runtime_error
+{
+  using std::runtime_error::runtime_error;
+};
 
-}  // namespace generic_type_support
+}  // namespace generic_type_utility
 
-#endif  // IMPL__CONVERT_HPP_
+#endif  // GENERIC_TYPE_UTILITY__ERRORS_HPP_

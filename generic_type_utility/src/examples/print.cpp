@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <generic_type_support/generic_type_support.hpp>
+#include <generic_type_utility/generic_type_utility.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include <iostream>
 
-using GenericMessage = generic_type_support::GenericMessage;
-using GenericAccess = generic_type_support::GenericMessage::GenericAccess;
+using GenericMessage = generic_type_utility::GenericMessage;
+using GenericAccess = generic_type_utility::GenericMessage::GenericAccess;
 
 class SampleNode : public rclcpp::Node
 {
 public:
-  SampleNode() : rclcpp::Node("generic_type_support")
+  SampleNode() : rclcpp::Node("generic_type_utility")
   {
     const std::string type_name = "std_msgs/msg/Header";
     message_ = std::make_shared<GenericMessage>(type_name);

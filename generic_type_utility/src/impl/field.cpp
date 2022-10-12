@@ -16,7 +16,7 @@
 #include "message.hpp"
 #include <rosidl_typesupport_introspection_cpp/field_types.hpp>
 
-namespace generic_type_support
+namespace generic_type_utility
 {
 
 TypeSupportField::TypeSupportField(const IntrospectionField * field)
@@ -138,4 +138,4 @@ bool TypeSupportField::HasIndex(size_t index) const
 }
 */
 
-}  // namespace generic_type_support
+}  // namespace generic_type_utility

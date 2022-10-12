@@ -1,4 +1,4 @@
-// Copyright 2022 Takagi, Isamu
+// Copyright 2021 Takagi, Isamu
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,21 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <generic_type_support/generic_type_support.hpp>
-#include <iostream>
+#ifndef GENERIC_TYPE_UTILITY__GENERIC_TYPE_UTILITY_HPP_
+#define GENERIC_TYPE_UTILITY__GENERIC_TYPE_UTILITY_HPP_
 
-int main()
-{
-  using GenericMessage = generic_type_support::GenericMessage;
-  using FieldError = generic_type_support::FieldError;
+#include <generic_type_utility/errors.hpp>
+#include <generic_type_utility/message.hpp>
 
-  try
-  {
-    const auto message_ = std::make_shared<GenericMessage>("std_msgs/msg/Header");
-    const auto access_ = message_->GetAccess("stamp.msec");
-  }
-  catch (const FieldError & error)
-  {
-    std::cout << "ERROR: " << error.what() << std::endl;
-  }
-}
+#endif  // GENERIC_TYPE_UTILITY__GENERIC_TYPE_UTILITY_HPP_

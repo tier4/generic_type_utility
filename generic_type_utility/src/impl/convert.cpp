@@ -18,7 +18,7 @@
 #include <rosidl_typesupport_introspection_cpp/field_types.hpp>
 #include <string>
 
-namespace generic_type_support
+namespace generic_type_utility
 {
 
 YAML::Node GetMessageYAML(const TypeSupportMessage & message, const void * data)
@@ -97,4 +97,4 @@ YAML::Node GetFieldValue(const TypeSupportField & field, const void * data)
   return YAML::Node("[PARSE_ERROR]");
 }
 
-}  // namespace generic_type_support
+}  // namespace generic_type_utility

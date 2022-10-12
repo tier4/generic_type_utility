@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GENERIC_TYPE_SUPPORT__MESSAGE_HPP_
-#define GENERIC_TYPE_SUPPORT__MESSAGE_HPP_
+#ifndef GENERIC_TYPE_UTILITY__MESSAGE_HPP_
+#define GENERIC_TYPE_UTILITY__MESSAGE_HPP_
 
 #include <rclcpp/serialization.hpp>
 #include <yaml-cpp/yaml.h>
 #include <memory>
 #include <string>
 
-namespace generic_type_support
+namespace generic_type_utility
 {
 
 class GenericMessage
@@ -55,6 +55,6 @@ public:
   std::shared_ptr<Data> data_;
 };
 
-}  // namespace generic_type_support
+}  // namespace generic_type_utility
 
-#endif  // GENERIC_TYPE_SUPPORT__MESSAGE_HPP_
+#endif  // GENERIC_TYPE_UTILITY__MESSAGE_HPP_

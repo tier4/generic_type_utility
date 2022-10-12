@@ -19,7 +19,7 @@
 #include <rosidl_typesupport_introspection_cpp/service_introspection.hpp>
 #include <stdexcept>
 
-namespace generic_type_support
+namespace generic_type_utility
 {
 
 using IntrospectionHandle = rosidl_message_type_support_t;
@@ -36,6 +36,6 @@ class TypeSupportIdentifierError : public std::runtime_error
   using std::runtime_error::runtime_error;
 };
 
-}  // namespace generic_type_support
+}  // namespace generic_type_utility
 
 #endif  // IMPL__UTIL__TYPES_HPP_

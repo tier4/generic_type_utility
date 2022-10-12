@@ -12,19 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GENERIC_TYPE_SUPPORT__ERRORS_HPP_
-#define GENERIC_TYPE_SUPPORT__ERRORS_HPP_
+#include <generic_type_utility/generic_type_utility.hpp>
+#include <gtest/gtest.h>
 
-#include <stdexcept>
-
-namespace generic_type_support
+/*
+TEST(generic_type_utility, test1)
 {
+  const auto support = generic_type_utility::TypeSupportMessage("std_msgs/msg/Header");
+  const auto message = support.GetClass();
+}
+*/
 
-class FieldError : public std::runtime_error
+int main(int argc, char ** argv)
 {
-  using std::runtime_error::runtime_error;
-};
-
-}  // namespace generic_type_support
-
-#endif  // GENERIC_TYPE_SUPPORT__ERRORS_HPP_
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}

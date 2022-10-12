@@ -16,9 +16,9 @@
 #include "impl/field.hpp"
 #include "impl/library.hpp"
 #include "impl/message.hpp"
-#include <generic_type_support/generic_type_support.hpp>
+#include <generic_type_utility/generic_type_utility.hpp>
 
-namespace generic_type_support
+namespace generic_type_utility
 {
 
 struct GenericMessage::Data
@@ -176,4 +176,4 @@ const YAML::Node GenericMessage::GenericAccess::Access(const YAML::Node & yaml) 
   return node;
 }
 
-}  // namespace generic_type_support
+}  // namespace generic_type_utility
