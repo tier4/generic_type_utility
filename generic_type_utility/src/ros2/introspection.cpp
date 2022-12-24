@@ -27,7 +27,6 @@ class RosIntrospection::Impl
 public:
   explicit Impl(const std::string & type_name);
 
-private:
   std::shared_ptr<rcpputils::SharedLibrary> library_;
   std::unique_ptr<RosTypeNode> rostype_;
 };
@@ -48,6 +47,18 @@ RosIntrospection::RosIntrospection(const std::string & type_name)
 
 RosIntrospection::~RosIntrospection()
 {
+}
+
+std::shared_ptr<RosMessage> RosIntrospection::create_message() const
+{
+  auto * members = impl_->rostype_->get_introspection_class();
+  auto * pointer = RosMessageDeleter::Allocate(members->size_of_);
+  members->init_function(pointer, rosidl_runtime_cpp::MessageInitialization::DEFAULTS_ONLY);
+
+  auto deleter = RosMessageDeleter(members->fini_function, impl_->library_);
+  auto message = std::make_shared<RosMessage>();
+  message->memory = std::unique_ptr<void, RosMessageDeleter>(pointer, deleter);
+  return message;
 }
 
 }  // namespace generic_type_utility

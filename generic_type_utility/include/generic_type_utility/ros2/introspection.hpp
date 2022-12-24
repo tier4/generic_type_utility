@@ -15,6 +15,7 @@
 #ifndef GENERIC_TYPE_UTILITY__ROS2__INTROSPECTION_HPP_
 #define GENERIC_TYPE_UTILITY__ROS2__INTROSPECTION_HPP_
 
+#include "message.hpp"
 #include <memory>
 #include <string>
 
@@ -26,6 +27,7 @@ class RosIntrospection final
 public:
   explicit RosIntrospection(const std::string & type_name);
   ~RosIntrospection();
+  std::shared_ptr<RosMessage> create_message() const;
 
 private:
   class Impl;

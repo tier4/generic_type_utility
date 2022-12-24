@@ -26,8 +26,11 @@ public:
   using IntrospectionClass = rosidl_typesupport_introspection_cpp::MessageMembers;
   using IntrospectionField = rosidl_typesupport_introspection_cpp::MessageMember;
   RosTypeNode(const IntrospectionField * field, const rosidl_message_type_support_t * handle);
+  const IntrospectionClass * get_introspection_class();
 
 private:
+  const IntrospectionField * field_;
+  const IntrospectionClass * klass_;
 };
 
 }  // namespace generic_type_utility

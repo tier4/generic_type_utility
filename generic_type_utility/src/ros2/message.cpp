@@ -17,12 +17,27 @@
 namespace generic_type_utility
 {
 
-RosMessage::RosMessage(const std::shared_ptr<RosIntrospection> introspection)
+RosMessageDeleter::RosMessageDeleter()
 {
+  function_ = nullptr;
+  library_ = nullptr;
 }
 
-RosMessage::~RosMessage()
+RosMessageDeleter::RosMessageDeleter(FunctionPointer function, FunctionLibrary library)
 {
+  function_ = function;
+  library_ = library;
+}
+
+void RosMessageDeleter::operator()(void * memory) const noexcept
+{
+  function_(memory);
+  std::free(memory);
+}
+
+void * RosMessageDeleter::Allocate(size_t size)
+{
+  return std::malloc(size);
 }
 
 }  // namespace generic_type_utility

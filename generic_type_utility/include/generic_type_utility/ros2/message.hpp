@@ -15,19 +15,30 @@
 #ifndef GENERIC_TYPE_UTILITY__ROS2__MESSAGE_HPP_
 #define GENERIC_TYPE_UTILITY__ROS2__MESSAGE_HPP_
 
-#include "introspection.hpp"
+#include <rclcpp/typesupport_helpers.hpp>
 #include <memory>
 
 namespace generic_type_utility
 {
 
-class RosMessage final
+class RosMessageDeleter final
 {
 public:
-  explicit RosMessage(const std::shared_ptr<RosIntrospection> introspection);
-  ~RosMessage();
+  using FunctionPointer = void (*)(void *);
+  using FunctionLibrary = std::shared_ptr<rcpputils::SharedLibrary>;
+  RosMessageDeleter();
+  RosMessageDeleter(FunctionPointer function, FunctionLibrary library);
+  void operator()(void * memory) const noexcept;
+  static void * Allocate(size_t size);
 
 private:
+  FunctionPointer function_;
+  FunctionLibrary library_;  // To keep the delete function loaded.
+};
+
+struct RosMessage final
+{
+  std::unique_ptr<void, RosMessageDeleter> memory;
 };
 
 }  // namespace generic_type_utility
