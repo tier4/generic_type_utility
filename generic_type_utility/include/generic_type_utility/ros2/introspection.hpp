@@ -12,41 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GENERIC_TYPE_UTILITY__TYPE__ACCESS_HPP_
-#define GENERIC_TYPE_UTILITY__TYPE__ACCESS_HPP_
+#ifndef GENERIC_TYPE_UTILITY__ROS2__INTROSPECTION_HPP_
+#define GENERIC_TYPE_UTILITY__ROS2__INTROSPECTION_HPP_
 
-#include <optional>
+#include <memory>
 #include <string>
-#include <vector>
 
 namespace generic_type_utility
 {
 
-class TypeAccessNode
+class RosIntrospection final
 {
 public:
-  explicit TypeAccessNode(const std::string & access);
-  std::string string() const;
-  const auto & field() const { return field_; }
-  const auto & index() const { return index_; }
+  explicit RosIntrospection(const std::string & type_name);
+  ~RosIntrospection();
 
 private:
-  std::string field_;
-  std::optional<int> index_;
-};
-
-class TypeAccess
-{
-public:
-  explicit TypeAccess(const std::string & access = "");
-  std::string string() const;
-  const auto & nodes() const { return nodes_; }
-
-private:
-  // TypeAccess * next_;
-  std::vector<TypeAccessNode> nodes_;
+  class Impl;
+  std::unique_ptr<Impl> impl_;
 };
 
 }  // namespace generic_type_utility
 
-#endif  // GENERIC_TYPE_UTILITY__TYPE__ACCESS_HPP_
+#endif  // GENERIC_TYPE_UTILITY__ROS2__INTROSPECTION_HPP_

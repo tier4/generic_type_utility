@@ -15,12 +15,51 @@
 #ifndef GENERIC_TYPE_UTILITY__TYPE__SCHEMA_HPP_
 #define GENERIC_TYPE_UTILITY__TYPE__SCHEMA_HPP_
 
+#include <memory>
+#include <string>
+#include <unordered_map>
+
 namespace generic_type_utility
 {
 
 class TypeSchema
 {
-  TypeSchema();
+public:
+  using SharedPtr = std::shared_ptr<TypeSchema>;
+  using ConstSharedPtr = std::shared_ptr<const TypeSchema>;
+
+  TypeSchema() = default;
+  virtual ~TypeSchema() = default;
+  virtual std::string name() const = 0;
+};
+
+class TypeReal : public TypeSchema
+{
+};
+class TypeText : public TypeSchema
+{
+};
+class TypeUInt : public TypeSchema
+{
+};
+class TypeSInt : public TypeSchema
+{
+};
+
+class TypeUInt8 : public TypeUInt
+{
+public:
+  std::string name() const override { return "uint8"; }
+};
+
+class TypeClass : public TypeSchema
+{
+public:
+  std::string name() const override { return name_; }
+
+private:
+  std::string name_;
+  std::unordered_map<std::string, TypeSchema::SharedPtr> members_;
 };
 
 }  // namespace generic_type_utility

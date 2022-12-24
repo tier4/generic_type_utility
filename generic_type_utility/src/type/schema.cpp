@@ -12,23 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <generic_type_utility/yaml.hpp>
-#include <yaml-cpp/yaml.h>
-#include <iostream>
+#include "generic_type_utility/type/schema.hpp"
 
-int main()
+namespace generic_type_utility
 {
-  const auto access = generic_type_utility::TypeAccess("test.yaml.data@1");
-  std::cout << access.string() << std::endl;
 
-  YAML::Node yaml;
-  yaml["hoge"] = "hoge";
-  yaml["fuga"] = "fuga";
-  yaml["test"]["yaml"]["data"][0] = 123;
-  yaml["test"]["yaml"]["data"][1] = 456;
-  yaml["test"]["yaml"]["data"][2] = 789;
-
-  YAML::Node node = generic_type_utility::apply(access, yaml);
-  std::cout << yaml << std::endl;
-  std::cout << node << std::endl;
-}
+}  // namespace generic_type_utility
