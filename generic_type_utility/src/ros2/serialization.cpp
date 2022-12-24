@@ -13,10 +13,38 @@
 // limitations under the License.
 
 #include "generic_type_utility/ros2/serialization.hpp"
+#include <rclcpp/serialization.hpp>
+#include <rclcpp/typesupport_helpers.hpp>
 
 namespace generic_type_utility
 {
 
-constexpr char typesupport_identifier[] = "rosidl_typesupport_cpp";
+class RosSerialization::Impl
+{
+public:
+  explicit Impl(const std::string & type_name);
+
+private:
+  std::shared_ptr<rcpputils::SharedLibrary> library_;
+  std::unique_ptr<rclcpp::SerializationBase> serialization_;
+};
+
+RosSerialization::Impl::Impl(const std::string & type_name)
+{
+  constexpr char identifier[] = "rosidl_typesupport_cpp";
+  library_ = rclcpp::get_typesupport_library(type_name, identifier);
+
+  const auto handle = rclcpp::get_typesupport_handle(type_name, identifier, *library_);
+  serialization_ = std::make_unique<rclcpp::SerializationBase>(handle);
+}
+
+RosSerialization::RosSerialization(const std::string & type_name)
+{
+  impl_ = std::make_unique<Impl>(type_name);
+}
+
+RosSerialization::~RosSerialization()
+{
+}
 
 }  // namespace generic_type_utility

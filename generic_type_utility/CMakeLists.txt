@@ -21,7 +21,9 @@ ament_auto_add_library(${PROJECT_NAME}_type SHARED
 
 ament_auto_add_library(${PROJECT_NAME}_ros2 SHARED
   src/ros2/introspection.cpp
+  src/ros2/message.cpp
   src/ros2/serialization.cpp
+  src/ros2/temp/type_node.cpp
 )
 
 ament_auto_add_executable(types

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "generic_type_utility/ros2/introspection.hpp"
-#include "temp/"
+#include "temp/type_node.hpp"
 #include <rclcpp/typesupport_helpers.hpp>
 
 //
@@ -28,16 +28,17 @@ public:
   explicit Impl(const std::string & type_name);
 
 private:
-  const rosidl_message_type_support_t * handle_;
   std::shared_ptr<rcpputils::SharedLibrary> library_;
+  std::unique_ptr<RosTypeNode> rostype_;
 };
 
 RosIntrospection::Impl::Impl(const std::string & type_name)
 {
   constexpr char identifier[] = "rosidl_typesupport_introspection_cpp";
   library_ = rclcpp::get_typesupport_library(type_name, identifier);
-  handle_ = rclcpp::get_typesupport_handle(type_name, identifier, *library_);
-  std::cout << library_ << ": " << type_name << std::endl;
+
+  const auto handle = rclcpp::get_typesupport_handle(type_name, identifier, *library_);
+  rostype_ = std::make_unique<RosTypeNode>(nullptr, handle);
 }
 
 RosIntrospection::RosIntrospection(const std::string & type_name)

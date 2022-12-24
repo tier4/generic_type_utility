@@ -12,24 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef ROS2__TEMP__TYPE_NODE_HPP_
-#define ROS2__TEMP__TYPE_NODE_HPP_
-
-#include <rosidl_typesupport_introspection_cpp/message_introspection.hpp>
+#include "generic_type_utility/ros2/message.hpp"
 
 namespace generic_type_utility
 {
 
-class RosTypeNode
+RosMessage::RosMessage(const std::shared_ptr<RosIntrospection> introspection)
 {
-public:
-  using IntrospectionClass = rosidl_typesupport_introspection_cpp::MessageMembers;
-  using IntrospectionField = rosidl_typesupport_introspection_cpp::MessageMember;
-  RosTypeNode(const IntrospectionField * field, const rosidl_message_type_support_t * handle);
+}
 
-private:
-};
+RosMessage::~RosMessage()
+{
+}
 
 }  // namespace generic_type_utility
-
-#endif  // ROS2__TEMP__TYPE_NODE_HPP_

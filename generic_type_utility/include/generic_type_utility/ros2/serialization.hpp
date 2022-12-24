@@ -15,8 +15,22 @@
 #ifndef GENERIC_TYPE_UTILITY__ROS2__SERIALIZATION_HPP_
 #define GENERIC_TYPE_UTILITY__ROS2__SERIALIZATION_HPP_
 
+#include <memory>
+#include <string>
+
 namespace generic_type_utility
 {
+
+class RosSerialization final
+{
+public:
+  explicit RosSerialization(const std::string & type_name);
+  ~RosSerialization();
+
+private:
+  class Impl;
+  std::unique_ptr<Impl> impl_;
+};
 
 }  // namespace generic_type_utility
 
