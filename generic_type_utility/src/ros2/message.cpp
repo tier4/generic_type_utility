@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generic_type_utility/ros2/message.hpp"
+#include <cstdlib>
 
 namespace generic_type_utility
 {

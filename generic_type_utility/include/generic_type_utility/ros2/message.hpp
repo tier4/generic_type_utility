@@ -15,8 +15,12 @@
 #ifndef GENERIC_TYPE_UTILITY__ROS2__MESSAGE_HPP_
 #define GENERIC_TYPE_UTILITY__ROS2__MESSAGE_HPP_
 
-#include <rclcpp/typesupport_helpers.hpp>
 #include <memory>
+
+// clang-format off
+namespace rclcpp { class SerializedMessage; }
+namespace rcpputils { class SharedLibrary; }
+// clang-format on
 
 namespace generic_type_utility
 {

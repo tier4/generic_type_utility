@@ -15,6 +15,7 @@
 #ifndef GENERIC_TYPE_UTILITY__ROS2__SERIALIZATION_HPP_
 #define GENERIC_TYPE_UTILITY__ROS2__SERIALIZATION_HPP_
 
+#include "message.hpp"
 #include <memory>
 #include <string>
 
@@ -26,6 +27,7 @@ class RosSerialization final
 public:
   explicit RosSerialization(const std::string & type_name);
   ~RosSerialization();
+  void deserialize(const rclcpp::SerializedMessage & serialized, RosMessage & message) const;
 
 private:
   class Impl;

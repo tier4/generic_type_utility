@@ -24,7 +24,6 @@ class RosSerialization::Impl
 public:
   explicit Impl(const std::string & type_name);
 
-private:
   std::shared_ptr<rcpputils::SharedLibrary> library_;
   std::unique_ptr<rclcpp::SerializationBase> serialization_;
 };
@@ -45,6 +44,11 @@ RosSerialization::RosSerialization(const std::string & type_name)
 
 RosSerialization::~RosSerialization()
 {
+}
+
+void RosSerialization::deserialize(const rclcpp::SerializedMessage & serialized, RosMessage & message) const
+{
+  impl_->serialization_->deserialize_message(&serialized, message.memory.get());
 }
 
 }  // namespace generic_type_utility

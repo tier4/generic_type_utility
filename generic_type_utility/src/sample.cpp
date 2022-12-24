@@ -62,6 +62,7 @@ void test3()
   const auto serialization = std::make_shared<RosSerialization>("std_msgs/msg/Header");
 
   auto message = introspection->create_message();
+  serialization->deserialize(serialized, *message);
 }
 
 void test2()
