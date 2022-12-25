@@ -61,8 +61,19 @@ void test3()
   const auto introspection = std::make_shared<RosIntrospection>("std_msgs/msg/Header");
   const auto serialization = std::make_shared<RosSerialization>("std_msgs/msg/Header");
 
-  auto message = introspection->create_message();
+  const auto message = introspection->create_message();
+  {
+    std::cout << "==================================================" << std::endl;
+    YAML::Node yaml = introspection->make_yaml(*message);
+    std::cout << yaml << std::endl;
+  }
+
   serialization->deserialize(serialized, *message);
+  {
+    std::cout << "==================================================" << std::endl;
+    YAML::Node yaml = introspection->make_yaml(*message);
+    std::cout << yaml << std::endl;
+  }
 }
 
 void test2()

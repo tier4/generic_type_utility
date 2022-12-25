@@ -61,4 +61,9 @@ std::shared_ptr<RosMessage> RosIntrospection::create_message() const
   return message;
 }
 
+YAML::Node RosIntrospection::make_yaml(RosMessage & message) const
+{
+  return impl_->rostype_->make_yaml(message.memory.get());
+}
+
 }  // namespace generic_type_utility

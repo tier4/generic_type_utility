@@ -16,6 +16,10 @@
 #define ROS2__TEMP__TYPE_NODE_HPP_
 
 #include <rosidl_typesupport_introspection_cpp/message_introspection.hpp>
+#include <yaml-cpp/yaml.h>
+#include <memory>
+#include <string>
+#include <vector>
 
 namespace generic_type_utility
 {
@@ -27,10 +31,18 @@ public:
   using IntrospectionField = rosidl_typesupport_introspection_cpp::MessageMember;
   RosTypeNode(const IntrospectionField * field, const rosidl_message_type_support_t * handle);
   const IntrospectionClass * get_introspection_class();
+  const std::string get_class_name();
+  const std::string get_field_name();
+  YAML::Node make_yaml(const void * memory);
 
 private:
+  YAML::Node make_yaml_class(const void * memory);
+  YAML::Node make_yaml_array(const void * memory);
+  YAML::Node make_yaml_value(const void * memory);
+
   const IntrospectionField * field_;
   const IntrospectionClass * klass_;
+  std::vector<std::unique_ptr<RosTypeNode>> nodes_;
 };
 
 }  // namespace generic_type_utility

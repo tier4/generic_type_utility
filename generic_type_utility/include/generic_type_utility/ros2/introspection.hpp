@@ -16,6 +16,7 @@
 #define GENERIC_TYPE_UTILITY__ROS2__INTROSPECTION_HPP_
 
 #include "message.hpp"
+#include <yaml-cpp/yaml.h>
 #include <memory>
 #include <string>
 
@@ -28,6 +29,7 @@ public:
   explicit RosIntrospection(const std::string & type_name);
   ~RosIntrospection();
   std::shared_ptr<RosMessage> create_message() const;
+  YAML::Node make_yaml(RosMessage & message) const;
 
 private:
   class Impl;
