@@ -12,9 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generic_type_utility/type/schema.hpp"
+#ifndef GENERIC_TYPE_UTILITY__GENERIC_MESSAGE_HPP_
+#define GENERIC_TYPE_UTILITY__GENERIC_MESSAGE_HPP_
+
+#include <generic_type_utility/ros2/introspection.hpp>
+#include <generic_type_utility/ros2/serialization.hpp>
+#include <string>
 
 namespace generic_type_utility
 {
 
+class GenericMessage
+{
+public:
+  explicit GenericMessage(const std::string & type);
+  YAML::Node deserialize(const rclcpp::SerializedMessage & serialized) const;
+
+private:
+  RosIntrospection introspection_;
+  RosSerialization serialization_;
+};
+
 }  // namespace generic_type_utility
+
+#endif  // GENERIC_TYPE_UTILITY__GENERIC_MESSAGE_HPP_

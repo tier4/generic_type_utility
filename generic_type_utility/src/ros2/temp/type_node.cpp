@@ -25,18 +25,11 @@ namespace generic_type_utility
 
 RosTypeNode::RosTypeNode(const IntrospectionField * field, const rosidl_message_type_support_t * handle)
 {
-  std::cout << "==================================================" << std::endl;
   field_ = field;
   klass_ = handle ? reinterpret_cast<const IntrospectionClass *>(handle->data) : nullptr;
 
-  if (field_)
-  {
-    std::cout << "field: " << field_->name_ << std::endl;
-  }
-
   if (klass_)
   {
-    std::cout << "class: " << klass_->message_namespace_ << "::" << klass_->message_name_ << std::endl;
     for (uint32_t i = 0; i < klass_->member_count_; ++i)
     {
       const IntrospectionField * node = klass_->members_ + i;

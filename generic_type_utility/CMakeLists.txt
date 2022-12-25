@@ -15,11 +15,11 @@ ament_auto_find_build_dependencies()
 
 ament_auto_add_library(${PROJECT_NAME}_type SHARED
   src/type/access.cpp
-  src/type/schema.cpp
   src/yaml.cpp
 )
 
 ament_auto_add_library(${PROJECT_NAME}_ros2 SHARED
+  src/generic_message.cpp
   src/ros2/introspection.cpp
   src/ros2/message.cpp
   src/ros2/serialization.cpp

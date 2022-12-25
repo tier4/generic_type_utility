@@ -12,11 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <generic_type_utility/ros2/introspection.hpp>
-#include <generic_type_utility/ros2/message.hpp>
-#include <generic_type_utility/ros2/serialization.hpp>
-#include <generic_type_utility/type/schema.hpp>
-#include <generic_type_utility/yaml.hpp>
+#include <generic_type_utility/generic_message.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include <yaml-cpp/yaml.h>
 #include <algorithm>
@@ -143,26 +139,13 @@ rclcpp::SerializedMessage create_serialized(const T & data)
 
 int main()
 {
-  const auto type_name = "geometry_msgs/msg/PoseWithCovarianceStamped";
   const auto serialized = create_serialized(data2);
-  const auto introspection = std::make_shared<RosIntrospection>(type_name);
-  const auto serialization = std::make_shared<RosSerialization>(type_name);
-
-  const auto message = introspection->create_message();
-  {
-    std::cout << "==================================================" << std::endl;
-    YAML::Node yaml = introspection->make_yaml(*message);
-    std::cout << yaml << std::endl;
-  }
-
-  serialization->deserialize(serialized, *message);
-  {
-    std::cout << "==================================================" << std::endl;
-    YAML::Node yaml = introspection->make_yaml(*message);
-    std::cout << yaml << std::endl;
-  }
+  const auto generic = GenericMessage("geometry_msgs/msg/PoseWithCovarianceStamped");
+  const auto yaml = generic.deserialize(serialized);
+  std::cout << yaml << std::endl;
 }
 
+/*
 void test1()
 {
   const auto access = generic_type_utility::TypeAccess("test.yaml.data@1");
@@ -179,3 +162,4 @@ void test1()
   std::cout << yaml << std::endl;
   std::cout << node << std::endl;
 }
+*/
