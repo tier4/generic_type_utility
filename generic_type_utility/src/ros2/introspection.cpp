@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "generic_type_utility/ros2/introspection.hpp"
-#include "temp/type_node.hpp"
+#include "structure.hpp"
 #include <rclcpp/typesupport_helpers.hpp>
 
 //
@@ -49,9 +49,9 @@ RosIntrospection::~RosIntrospection()
 {
 }
 
-bool RosIntrospection::validate(const TypeAccessor & accessor) const
+bool RosIntrospection::validate(const GenericProperty & property) const
 {
-  return impl_->rostype_->validate(accessor.elements().begin());
+  return impl_->rostype_->validate(property.elements().begin());
 }
 
 std::shared_ptr<RosMessage> RosIntrospection::create_message() const

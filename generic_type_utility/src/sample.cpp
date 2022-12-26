@@ -144,13 +144,13 @@ int main()
   const auto yaml = generic.deserialize(serialized);
   std::cout << yaml << std::endl;
 
-  const auto access1 = TypeAccessor("pose.covariance@35");
-  const auto access2 = TypeAccessor("header.frame_id");
-  const auto access3 = TypeAccessor("pose.pose.position.x");
-  std::cout << std::boolalpha << generic.validate(access1) << std::endl;
-  std::cout << std::boolalpha << generic.validate(access2) << std::endl;
-  std::cout << std::boolalpha << generic.validate(access3) << std::endl;
-  std::cout << access1.apply(yaml) << std::endl;
-  std::cout << access2.apply(yaml) << std::endl;
-  std::cout << access3.apply(yaml) << std::endl;
+  const auto property1 = GenericProperty("pose.covariance@35");
+  const auto property2 = GenericProperty("header.frame_id");
+  const auto property3 = GenericProperty("pose.pose.position.x");
+  std::cout << std::boolalpha << generic.validate(property1) << std::endl;
+  std::cout << std::boolalpha << generic.validate(property2) << std::endl;
+  std::cout << std::boolalpha << generic.validate(property3) << std::endl;
+  std::cout << property1.apply(yaml) << std::endl;
+  std::cout << property2.apply(yaml) << std::endl;
+  std::cout << property3.apply(yaml) << std::endl;
 }

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef ROS2__TEMP__TYPE_NODE_HPP_
-#define ROS2__TEMP__TYPE_NODE_HPP_
+#ifndef ROS2__STRUCTURE_HPP_
+#define ROS2__STRUCTURE_HPP_
 
-#include "generic_type_utility/type/access.hpp"
+#include "generic_type_utility/generic_property.hpp"
 #include <rosidl_typesupport_introspection_cpp/message_introspection.hpp>
 #include <yaml-cpp/yaml.h>
 #include <memory>
@@ -35,12 +35,12 @@ public:
   const IntrospectionClass * get_introspection_class();
   const std::string get_class_name();
   const std::string get_field_name();
-  bool validate(const TypeAccessor::Iterator & accessor) const;
+  bool validate(const GenericProperty::Iterator & property) const;
   YAML::Node make_yaml(const void * memory);
 
 private:
-  bool validate_field(const TypeAccessor::Iterator & accessor) const;
-  bool validate_index(const TypeAccessor::Iterator & accessor) const;
+  bool validate_field(const GenericProperty::Iterator & property) const;
+  bool validate_index(const GenericProperty::Iterator & property) const;
   YAML::Node make_yaml_class(const void * memory);
   YAML::Node make_yaml_array(const void * memory);
   YAML::Node make_yaml_value(const void * memory);
@@ -53,4 +53,4 @@ private:
 
 }  // namespace generic_type_utility
 
-#endif  // ROS2__TEMP__TYPE_NODE_HPP_
+#endif  // ROS2__STRUCTURE_HPP_

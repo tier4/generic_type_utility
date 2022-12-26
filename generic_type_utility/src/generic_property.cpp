@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generic_type_utility/type/access.hpp"
+#include "generic_type_utility/generic_property.hpp"
 #include <iostream>
 
 namespace generic_type_utility
 {
 
-TypeAccessor::TypeAccessor(const std::string & path)
+GenericProperty::GenericProperty(const std::string & path)
 {
   std::string text = path;
   if (!text.empty() && text.front() != '.' && text.front() != '@')
@@ -49,7 +49,7 @@ TypeAccessor::TypeAccessor(const std::string & path)
   elements_.push_back({std::nullopt, std::nullopt});  // Add sentinel.
 }
 
-const std::string TypeAccessor::path() const
+const std::string GenericProperty::path() const
 {
   std::string result;
   for (const auto & element : elements_)
@@ -60,7 +60,7 @@ const std::string TypeAccessor::path() const
   return result;
 }
 
-YAML::Node TypeAccessor::apply(const YAML::Node & yaml) const
+YAML::Node GenericProperty::apply(const YAML::Node & yaml) const
 {
   YAML::Node node = yaml;
   for (const auto & element : elements_)

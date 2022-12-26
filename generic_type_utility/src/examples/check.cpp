@@ -17,9 +17,12 @@
 
 int main()
 {
-  const auto message = generic_type_utility::GenericMessage("std_msgs/msg/Header");
-  const auto access1 = generic_type_utility::TypeAccessor("stamp.nsec");
-  const auto access2 = generic_type_utility::TypeAccessor("stamp.nanosec");
-  std::cout << std::boolalpha << message.validate(access1) << std::endl;
-  std::cout << std::boolalpha << message.validate(access2) << std::endl;
+  using generic_type_utility::GenericMessage;
+  using generic_type_utility::GenericProperty;
+
+  const auto message = GenericMessage("std_msgs/msg/Header");
+  const auto property1 = GenericProperty("stamp.nsec");
+  const auto property2 = GenericProperty("stamp.nanosec");
+  std::cout << std::boolalpha << message.validate(property1) << std::endl;
+  std::cout << std::boolalpha << message.validate(property2) << std::endl;
 }

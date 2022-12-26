@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "type_node.hpp"
+#include "structure.hpp"
 #include <rosidl_typesupport_introspection_cpp/field_types.hpp>
 #include <memory>
 #include <string>
@@ -59,30 +59,30 @@ const std::string RosTypeNode::get_field_name()
   return field_->name_;
 }
 
-bool RosTypeNode::validate(const TypeAccessor::Iterator & accessor) const
+bool RosTypeNode::validate(const GenericProperty::Iterator & property) const
 {
-  if (accessor->field)
+  if (property->field)
   {
-    return validate_field(accessor);
+    return validate_field(property);
   }
-  if (accessor->index)
+  if (property->index)
   {
-    return validate_index(accessor);
+    return validate_index(property);
   }
   return true;  // All fields exist.
 }
 
-bool RosTypeNode::validate_field(const TypeAccessor::Iterator & accessor) const
+bool RosTypeNode::validate_field(const GenericProperty::Iterator & property) const
 {
-  const auto iter = nodes_map_.find(accessor->field.value());
+  const auto iter = nodes_map_.find(property->field.value());
   if (iter == nodes_map_.end())
   {
     return false;  // The specified field does not exist.
   }
-  return iter->second->validate(std::next(accessor));
+  return iter->second->validate(std::next(property));
 }
 
-bool RosTypeNode::validate_index(const TypeAccessor::Iterator & accessor) const
+bool RosTypeNode::validate_index(const GenericProperty::Iterator & property) const
 {
   if (!field_ || !field_->is_array_)
   {
@@ -90,14 +90,14 @@ bool RosTypeNode::validate_index(const TypeAccessor::Iterator & accessor) const
   }
   if (field_->array_size_ != 0)  // For fixed or upper bound array.
   {
-    const int input = accessor->index.value();
+    const int input = property->index.value();
     const int index = input < 0 ? input + field_->array_size_ : input;
     if (index < 0 || field_->array_size_ <= static_cast<size_t>(index))
     {
       return false;
     }
   }
-  return validate(std::next(accessor));
+  return validate(std::next(property));
 }
 
 YAML::Node RosTypeNode::make_yaml(const void * memory)

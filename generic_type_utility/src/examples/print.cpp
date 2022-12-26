@@ -17,7 +17,7 @@
 #include <iostream>
 
 using generic_type_utility::GenericMessage;
-using generic_type_utility::TypeAccessor;
+using generic_type_utility::GenericProperty;
 
 class SampleNode : public rclcpp::Node
 {
@@ -26,12 +26,12 @@ public:
   {
     const std::string type_name = "std_msgs/msg/Header";
     message_ = std::make_unique<GenericMessage>(type_name);
-    accessor_ = std::make_unique<TypeAccessor>("stamp.sec");
+    property_ = std::make_unique<GenericProperty>("stamp.sec");
 
     const auto callback = [this](const std::shared_ptr<rclcpp::SerializedMessage> serialized)
     {
       const auto yaml = message_->deserialize(*serialized);
-      const auto node = accessor_->apply(yaml);
+      const auto node = property_->apply(yaml);
       std::cout << node.as<int>() << std::endl;
     };
     sub_ = create_generic_subscription("/message", type_name, rclcpp::QoS(1), callback);
@@ -39,7 +39,7 @@ public:
 
 private:
   std::unique_ptr<GenericMessage> message_;
-  std::unique_ptr<TypeAccessor> accessor_;
+  std::unique_ptr<GenericProperty> property_;
   rclcpp::GenericSubscription::SharedPtr sub_;
 };
 

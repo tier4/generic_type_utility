@@ -7,19 +7,19 @@ if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_EXTENSIONS OFF)
 endif()
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  add_compile_options(-Wall -Wextra -Wpedantic) # -Werror)
+  add_compile_options(-Wall -Wextra -Wpedantic -Werror)
 endif()
 
 find_package(ament_cmake_auto REQUIRED)
 ament_auto_find_build_dependencies()
 
 ament_auto_add_library(${PROJECT_NAME} SHARED
-  src/type/access.cpp
+  src/generic_property.cpp
   src/generic_message.cpp
   src/ros2/introspection.cpp
-  src/ros2/message.cpp
   src/ros2/serialization.cpp
-  src/ros2/temp/type_node.cpp
+  src/ros2/message.cpp
+  src/ros2/structure.cpp
 )
 
 ament_auto_add_executable(types

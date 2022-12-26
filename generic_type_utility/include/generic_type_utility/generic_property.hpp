@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GENERIC_TYPE_UTILITY__TYPE__ACCESS_HPP_
-#define GENERIC_TYPE_UTILITY__TYPE__ACCESS_HPP_
+#ifndef GENERIC_TYPE_UTILITY__GENERIC_PROPERTY_HPP_
+#define GENERIC_TYPE_UTILITY__GENERIC_PROPERTY_HPP_
 
 #include <yaml-cpp/yaml.h>
 #include <optional>
@@ -23,26 +23,26 @@
 namespace generic_type_utility
 {
 
-struct TypeAccessorElement
+struct GenericPropertyElement
 {
   const std::optional<std::string> field;
   const std::optional<int> index;
 };
 
-class TypeAccessor
+class GenericProperty
 {
 public:
-  using Elements = std::vector<TypeAccessorElement>;
-  using Iterator = std::vector<TypeAccessorElement>::const_iterator;
-  explicit TypeAccessor(const std::string & path = "");
-  const std::vector<TypeAccessorElement> & elements() const { return elements_; }
+  using Elements = std::vector<GenericPropertyElement>;
+  using Iterator = std::vector<GenericPropertyElement>::const_iterator;
+  explicit GenericProperty(const std::string & path = "");
+  const std::vector<GenericPropertyElement> & elements() const { return elements_; }
   const std::string path() const;
   YAML::Node apply(const YAML::Node & yaml) const;
 
 private:
-  std::vector<TypeAccessorElement> elements_;
+  std::vector<GenericPropertyElement> elements_;
 };
 
 }  // namespace generic_type_utility
 
-#endif  // GENERIC_TYPE_UTILITY__TYPE__ACCESS_HPP_
+#endif  // GENERIC_TYPE_UTILITY__GENERIC_PROPERTY_HPP_
