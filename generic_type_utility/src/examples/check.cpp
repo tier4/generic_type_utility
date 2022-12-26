@@ -12,21 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <generic_type_utility/generic_type_utility.hpp>
+#include <generic_type_utility/generic_message.hpp>
 #include <iostream>
 
 int main()
 {
-  using GenericMessage = generic_type_utility::GenericMessage;
-  using FieldError = generic_type_utility::FieldError;
-
-  try
-  {
-    const auto message_ = std::make_shared<GenericMessage>("std_msgs/msg/Header");
-    const auto access_ = message_->GetAccess("stamp.msec");
-  }
-  catch (const FieldError & error)
-  {
-    std::cout << "ERROR: " << error.what() << std::endl;
-  }
+  const auto message = generic_type_utility::GenericMessage("std_msgs/msg/Header");
+  const auto access1 = generic_type_utility::TypeAccessor("stamp.nsec");
+  const auto access2 = generic_type_utility::TypeAccessor("stamp.nanosec");
+  std::cout << std::boolalpha << message.validate(access1) << std::endl;
+  std::cout << std::boolalpha << message.validate(access2) << std::endl;
 }

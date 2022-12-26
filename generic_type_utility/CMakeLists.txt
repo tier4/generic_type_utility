@@ -13,12 +13,8 @@ endif()
 find_package(ament_cmake_auto REQUIRED)
 ament_auto_find_build_dependencies()
 
-ament_auto_add_library(${PROJECT_NAME}_type SHARED
+ament_auto_add_library(${PROJECT_NAME} SHARED
   src/type/access.cpp
-  src/yaml.cpp
-)
-
-ament_auto_add_library(${PROJECT_NAME}_ros2 SHARED
   src/generic_message.cpp
   src/ros2/introspection.cpp
   src/ros2/message.cpp
@@ -28,14 +24,6 @@ ament_auto_add_library(${PROJECT_NAME}_ros2 SHARED
 
 ament_auto_add_executable(types
   src/sample.cpp
-)
-
-ament_auto_add_library(${PROJECT_NAME} SHARED
-  src/generic_type_utility.cpp
-  src/impl/library.cpp
-  src/impl/message.cpp
-  src/impl/field.cpp
-  src/impl/convert.cpp
 )
 
 ament_auto_add_executable(print

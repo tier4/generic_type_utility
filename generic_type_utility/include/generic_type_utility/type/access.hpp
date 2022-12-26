@@ -15,6 +15,7 @@
 #ifndef GENERIC_TYPE_UTILITY__TYPE__ACCESS_HPP_
 #define GENERIC_TYPE_UTILITY__TYPE__ACCESS_HPP_
 
+#include <yaml-cpp/yaml.h>
 #include <optional>
 #include <string>
 #include <vector>
@@ -34,8 +35,9 @@ public:
   using Elements = std::vector<TypeAccessorElement>;
   using Iterator = std::vector<TypeAccessorElement>::const_iterator;
   explicit TypeAccessor(const std::string & path = "");
-  const std::string path() const;
   const std::vector<TypeAccessorElement> & elements() const { return elements_; }
+  const std::string path() const;
+  YAML::Node apply(const YAML::Node & yaml) const;
 
 private:
   std::vector<TypeAccessorElement> elements_;

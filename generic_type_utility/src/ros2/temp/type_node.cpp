@@ -177,4 +177,80 @@ YAML::Node RosTypeNode::make_yaml_value(const void * memory)
   return YAML::Node("[ERROR: UNKNOWN TYPE]");
 }
 
+/*
+const std::string TypeSupportField::GetTypeName() const
+{
+  using namespace rosidl_typesupport_introspection_cpp;  // NOLINT(build/namespaces)
+
+  switch (GetTypeID())
+  {
+    case ROS_TYPE_FLOAT:
+      return "float";
+    case ROS_TYPE_DOUBLE:
+      return "double";
+    case ROS_TYPE_LONG_DOUBLE:
+      return "long double";
+    case ROS_TYPE_CHAR:
+      return "char";
+    case ROS_TYPE_WCHAR:
+      return "wchar";
+    case ROS_TYPE_BOOLEAN:
+      return "bool";
+    case ROS_TYPE_OCTET:
+      return "octet";
+    case ROS_TYPE_UINT8:
+      return "uint8";
+    case ROS_TYPE_INT8:
+      return "int8";
+    case ROS_TYPE_UINT16:
+      return "uint16";
+    case ROS_TYPE_INT16:
+      return "int16";
+    case ROS_TYPE_UINT32:
+      return "uint32";
+    case ROS_TYPE_INT32:
+      return "int32";
+    case ROS_TYPE_UINT64:
+      return "uint64";
+    case ROS_TYPE_INT64:
+      return "int64";
+    case ROS_TYPE_STRING:
+      return "string";
+    case ROS_TYPE_WSTRING:
+      return "wstring";
+    case ROS_TYPE_MESSAGE:
+      return GetMessage().GetTypeName();
+  }
+  throw std::runtime_error("TypeSupportField::GetTypeName");
+}
+
+void dump_class() const
+{
+  std::cout << "namespace     : " << message_->message_namespace_ << std::endl;
+  std::cout << "name          : " << message_->message_name_ << std::endl;
+  std::cout << "member_count  : " << message_->member_count_ << std::endl;
+  std::cout << "size_of       : " << message_->size_of_ << std::endl;
+  std::cout << "members       : " << message_->members_ << std::endl;
+  std::cout << "init_function : " << reinterpret_cast<void *>(message_->init_function) << std::endl;
+  std::cout << "fini_function : " << reinterpret_cast<void *>(message_->fini_function) << std::endl;
+}
+
+void dump_field() const
+{
+  std::cout << "name               : " << field_->name_ << std::endl;
+  std::cout << "type_id            : " << static_cast<uint32_t>(field_->type_id_) << std::endl;
+  std::cout << "string_upper_bound : " << field_->string_upper_bound_ << std::endl;
+  std::cout << "members            : " << field_->members_ << std::endl;
+  std::cout << "is_array           : " << field_->is_array_ << std::endl;
+  std::cout << "array_size         : " << field_->array_size_ << std::endl;
+  std::cout << "is_upper_bound     : " << field_->is_upper_bound_ << std::endl;
+  std::cout << "offset             : " << field_->offset_ << std::endl;
+  std::cout << "default_value      : " << field_->default_value_ << std::endl;
+  std::cout << "size_function      : " << field_->size_function << std::endl;
+  std::cout << "get_const_function : " << field_->get_const_function << std::endl;
+  std::cout << "get_function       : " << field_->get_function << std::endl;
+  std::cout << "resize_function    : " << field_->resize_function << std::endl;
+}
+*/
+
 }  // namespace generic_type_utility

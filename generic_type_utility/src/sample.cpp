@@ -144,9 +144,13 @@ int main()
   const auto yaml = generic.deserialize(serialized);
   std::cout << yaml << std::endl;
 
-  const auto access = TypeAccessor("pose.covariance@35");
-  std::cout << std::boolalpha << generic.validate(access) << std::endl;
-
-  YAML::Node node = access.apply(yaml);
-  std::cout << node << std::endl;
+  const auto access1 = TypeAccessor("pose.covariance@35");
+  const auto access2 = TypeAccessor("header.frame_id");
+  const auto access3 = TypeAccessor("pose.pose.position.x");
+  std::cout << std::boolalpha << generic.validate(access1) << std::endl;
+  std::cout << std::boolalpha << generic.validate(access2) << std::endl;
+  std::cout << std::boolalpha << generic.validate(access3) << std::endl;
+  std::cout << access1.apply(yaml) << std::endl;
+  std::cout << access2.apply(yaml) << std::endl;
+  std::cout << access3.apply(yaml) << std::endl;
 }

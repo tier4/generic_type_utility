@@ -60,4 +60,15 @@ const std::string TypeAccessor::path() const
   return result;
 }
 
+YAML::Node TypeAccessor::apply(const YAML::Node & yaml) const
+{
+  YAML::Node node = yaml;
+  for (const auto & element : elements_)
+  {
+    if (element.field) node.reset(node[element.field.value()]);
+    if (element.index) node.reset(node[element.index.value()]);
+  }
+  return node;
+}
+
 }  // namespace generic_type_utility
