@@ -15,10 +15,12 @@
 #ifndef ROS2__TEMP__TYPE_NODE_HPP_
 #define ROS2__TEMP__TYPE_NODE_HPP_
 
+#include "generic_type_utility/type/access.hpp"
 #include <rosidl_typesupport_introspection_cpp/message_introspection.hpp>
 #include <yaml-cpp/yaml.h>
 #include <memory>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 namespace generic_type_utility
@@ -33,9 +35,12 @@ public:
   const IntrospectionClass * get_introspection_class();
   const std::string get_class_name();
   const std::string get_field_name();
+  bool validate(const TypeAccessor::Iterator & accessor) const;
   YAML::Node make_yaml(const void * memory);
 
 private:
+  bool validate_field(const TypeAccessor::Iterator & accessor) const;
+  bool validate_index(const TypeAccessor::Iterator & accessor) const;
   YAML::Node make_yaml_class(const void * memory);
   YAML::Node make_yaml_array(const void * memory);
   YAML::Node make_yaml_value(const void * memory);
@@ -43,6 +48,7 @@ private:
   const IntrospectionField * field_;
   const IntrospectionClass * klass_;
   std::vector<std::unique_ptr<RosTypeNode>> nodes_;
+  std::unordered_map<std::string, RosTypeNode *> nodes_map_;
 };
 
 }  // namespace generic_type_utility

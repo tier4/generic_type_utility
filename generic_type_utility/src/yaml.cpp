@@ -17,15 +17,20 @@
 namespace generic_type_utility
 {
 
-YAML::Node apply(const TypeAccess & access, const YAML::Node & yaml)
+YAML::Node apply(const TypeAccessor & access, const YAML::Node & yaml)
 {
+  (void)access;
   YAML::Node data = yaml;
-  for (const auto & node : access.nodes())
+  /*
+  for (const auto & element : access.elements())
   {
-    const auto & field = node.field();
-    const auto & index = node.index();
-    data.reset(index ? data[field][index.value()] : data[field]);
+    data.reset(data[element.get_field()]);
+    if (element.is_array())
+    {
+      data.reset(data[element.get_index()]);
+    }
   }
+  */
   return data;
 }
 

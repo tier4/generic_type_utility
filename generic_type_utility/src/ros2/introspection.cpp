@@ -49,6 +49,11 @@ RosIntrospection::~RosIntrospection()
 {
 }
 
+bool RosIntrospection::validate(const TypeAccessor & accessor) const
+{
+  return impl_->rostype_->validate(accessor.elements().begin());
+}
+
 std::shared_ptr<RosMessage> RosIntrospection::create_message() const
 {
   auto * members = impl_->rostype_->get_introspection_class();

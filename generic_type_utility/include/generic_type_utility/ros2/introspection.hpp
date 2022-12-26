@@ -15,7 +15,8 @@
 #ifndef GENERIC_TYPE_UTILITY__ROS2__INTROSPECTION_HPP_
 #define GENERIC_TYPE_UTILITY__ROS2__INTROSPECTION_HPP_
 
-#include "message.hpp"
+#include "generic_type_utility/ros2/message.hpp"
+#include "generic_type_utility/type/access.hpp"
 #include <yaml-cpp/yaml.h>
 #include <memory>
 #include <string>
@@ -28,6 +29,7 @@ class RosIntrospection final
 public:
   explicit RosIntrospection(const std::string & type_name);
   ~RosIntrospection();
+  bool validate(const TypeAccessor & accessor) const;
   std::shared_ptr<RosMessage> create_message() const;
   YAML::Node make_yaml(RosMessage & message) const;
 

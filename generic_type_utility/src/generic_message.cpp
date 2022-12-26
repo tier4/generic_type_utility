@@ -21,6 +21,11 @@ GenericMessage::GenericMessage(const std::string & type_name) : introspection_(t
 {
 }
 
+bool GenericMessage::validate(const TypeAccessor & accessor) const
+{
+  return introspection_.validate(accessor);
+}
+
 YAML::Node GenericMessage::deserialize(const rclcpp::SerializedMessage & serialized) const
 {
   const auto message = introspection_.create_message();

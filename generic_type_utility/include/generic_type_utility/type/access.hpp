@@ -22,29 +22,23 @@
 namespace generic_type_utility
 {
 
-class TypeAccessNode
+struct TypeAccessorElement
 {
-public:
-  explicit TypeAccessNode(const std::string & access);
-  std::string string() const;
-  const auto & field() const { return field_; }
-  const auto & index() const { return index_; }
-
-private:
-  std::string field_;
-  std::optional<int> index_;
+  const std::optional<std::string> field;
+  const std::optional<int> index;
 };
 
-class TypeAccess
+class TypeAccessor
 {
 public:
-  explicit TypeAccess(const std::string & access = "");
-  std::string string() const;
-  const auto & nodes() const { return nodes_; }
+  using Elements = std::vector<TypeAccessorElement>;
+  using Iterator = std::vector<TypeAccessorElement>::const_iterator;
+  explicit TypeAccessor(const std::string & path = "");
+  const std::string path() const;
+  const std::vector<TypeAccessorElement> & elements() const { return elements_; }
 
 private:
-  // TypeAccess * next_;
-  std::vector<TypeAccessNode> nodes_;
+  std::vector<TypeAccessorElement> elements_;
 };
 
 }  // namespace generic_type_utility

@@ -13,66 +13,51 @@
 // limitations under the License.
 
 #include "generic_type_utility/type/access.hpp"
+#include <iostream>
 
 namespace generic_type_utility
 {
 
-std::string join(const std::vector<std::string> & input, const std::string & delimiter)
+TypeAccessor::TypeAccessor(const std::string & path)
+{
+  std::string text = path;
+  if (!text.empty() && text.front() != '.' && text.front() != '@')
+  {
+    text = "." + text;
+  }
+
+  std::vector<size_t> indices;
+  {
+    size_t pos = 0;
+    while (pos = text.find_first_of(".@", pos), pos != std::string::npos)
+    {
+      indices.push_back(pos++);
+    }
+    indices.push_back(text.size());
+  }
+
+  for (size_t i = 1; i < indices.size(); ++i)
+  {
+    const auto pos = indices[i - 1];
+    const auto len = indices[i] - indices[i - 1];
+    if (len < 2) throw std::invalid_argument("token size is too short: " + path);
+
+    const auto token = text.substr(pos + 1, len - 1);
+    if (text[pos] == '.') elements_.push_back({token, std::nullopt});
+    if (text[pos] == '@') elements_.push_back({std::nullopt, std::stoi(token)});
+  }
+  elements_.push_back({std::nullopt, std::nullopt});  // Add sentinel.
+}
+
+const std::string TypeAccessor::path() const
 {
   std::string result;
-  for (size_t i = 0; i < input.size(); ++i)
+  for (const auto & element : elements_)
   {
-    result += (i ? delimiter : "") + input[i];
+    if (element.field) result += "." + element.field.value();
+    if (element.index) result += "@" + std::to_string(element.index.value());
   }
   return result;
-}
-
-std::vector<std::string> split(const std::string & input, char delimiter)
-{
-  std::vector<std::string> result;
-  size_t found = input.find(delimiter);
-  size_t start = 0;
-  while (found != std::string::npos)
-  {
-    result.push_back(input.substr(start, found - start));
-    start = found + 1;
-    found = input.find(delimiter, start);
-  }
-  result.push_back(input.substr(start));
-  return result;
-}
-
-TypeAccessNode::TypeAccessNode(const std::string & access)
-{
-  const auto token = split(access, '@');
-  field_ = token[0];
-  index_ = token.size() == 2 ? std::optional(std::stoi(token[1])) : std::nullopt;
-}
-
-std::string TypeAccessNode::string() const
-{
-  return field_ + (index_ ? "@" + std::to_string(index_.value()) : "");
-}
-
-TypeAccess::TypeAccess(const std::string & access)
-{
-  if (!access.empty())
-  {
-    for (const auto & token : split(access, '.'))
-    {
-      nodes_.emplace_back(token);
-    }
-  }
-}
-
-std::string TypeAccess::string() const
-{
-  std::vector<std::string> fields;
-  for (const auto & node : nodes_)
-  {
-    fields.push_back(node.string());
-  }
-  return join(fields, ".");
 }
 
 }  // namespace generic_type_utility

@@ -143,23 +143,10 @@ int main()
   const auto generic = GenericMessage("geometry_msgs/msg/PoseWithCovarianceStamped");
   const auto yaml = generic.deserialize(serialized);
   std::cout << yaml << std::endl;
-}
 
-/*
-void test1()
-{
-  const auto access = generic_type_utility::TypeAccess("test.yaml.data@1");
-  std::cout << access.string() << std::endl;
+  const auto access = TypeAccessor("pose.covariance@35");
+  std::cout << std::boolalpha << generic.validate(access) << std::endl;
 
-  YAML::Node yaml;
-  yaml["hoge"] = "hoge";
-  yaml["fuga"] = "fuga";
-  yaml["test"]["yaml"]["data"][0] = 123;
-  yaml["test"]["yaml"]["data"][1] = 456;
-  yaml["test"]["yaml"]["data"][2] = 789;
-
-  YAML::Node node = generic_type_utility::apply(access, yaml);
-  std::cout << yaml << std::endl;
+  YAML::Node node = access.apply(yaml);
   std::cout << node << std::endl;
 }
-*/

@@ -17,6 +17,7 @@
 
 #include <generic_type_utility/ros2/introspection.hpp>
 #include <generic_type_utility/ros2/serialization.hpp>
+#include <generic_type_utility/type/access.hpp>
 #include <string>
 
 namespace generic_type_utility
@@ -26,6 +27,7 @@ class GenericMessage
 {
 public:
   explicit GenericMessage(const std::string & type);
+  bool validate(const TypeAccessor & accessor) const;
   YAML::Node deserialize(const rclcpp::SerializedMessage & serialized) const;
 
 private:

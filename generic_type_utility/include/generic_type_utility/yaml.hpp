@@ -21,7 +21,7 @@
 namespace generic_type_utility
 {
 
-YAML::Node apply(const TypeAccess & access, const YAML::Node & yaml);
+YAML::Node apply(const TypeAccessor & access, const YAML::Node & yaml);
 
 }  // namespace generic_type_utility
 

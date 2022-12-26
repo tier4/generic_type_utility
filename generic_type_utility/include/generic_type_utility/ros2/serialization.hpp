@@ -15,7 +15,7 @@
 #ifndef GENERIC_TYPE_UTILITY__ROS2__SERIALIZATION_HPP_
 #define GENERIC_TYPE_UTILITY__ROS2__SERIALIZATION_HPP_
 
-#include "message.hpp"
+#include "generic_type_utility/ros2/message.hpp"
 #include <memory>
 #include <string>
 

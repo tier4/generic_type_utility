@@ -35,6 +35,10 @@ RosTypeNode::RosTypeNode(const IntrospectionField * field, const rosidl_message_
       const IntrospectionField * node = klass_->members_ + i;
       nodes_.push_back(std::make_unique<RosTypeNode>(node, node->members_));
     }
+    for (const auto & node : nodes_)
+    {
+      nodes_map_[node->get_field_name()] = node.get();
+    }
   }
 }
 
@@ -45,20 +49,55 @@ const RosTypeNode::IntrospectionClass * RosTypeNode::get_introspection_class()
 
 const std::string RosTypeNode::get_class_name()
 {
-  if (!klass_)
-  {
-    throw std::logic_error("RosTypeNode::get_class_name");
-  }
+  if (!klass_) throw std::logic_error("RosTypeNode::get_class_name");
   return klass_->message_namespace_ + std::string("::") + klass_->message_name_;
 }
 
 const std::string RosTypeNode::get_field_name()
 {
-  if (!field_)
-  {
-    throw std::logic_error("RosTypeNode::get_field_name");
-  }
+  if (!field_) throw std::logic_error("RosTypeNode::get_field_name");
   return field_->name_;
+}
+
+bool RosTypeNode::validate(const TypeAccessor::Iterator & accessor) const
+{
+  if (accessor->field)
+  {
+    return validate_field(accessor);
+  }
+  if (accessor->index)
+  {
+    return validate_index(accessor);
+  }
+  return true;  // All fields exist.
+}
+
+bool RosTypeNode::validate_field(const TypeAccessor::Iterator & accessor) const
+{
+  const auto iter = nodes_map_.find(accessor->field.value());
+  if (iter == nodes_map_.end())
+  {
+    return false;  // The specified field does not exist.
+  }
+  return iter->second->validate(std::next(accessor));
+}
+
+bool RosTypeNode::validate_index(const TypeAccessor::Iterator & accessor) const
+{
+  if (!field_ || !field_->is_array_)
+  {
+    return false;
+  }
+  if (field_->array_size_ != 0)  // For fixed or upper bound array.
+  {
+    const int input = accessor->index.value();
+    const int index = input < 0 ? input + field_->array_size_ : input;
+    if (index < 0 || field_->array_size_ <= static_cast<size_t>(index))
+    {
+      return false;
+    }
+  }
+  return validate(std::next(accessor));
 }
 
 YAML::Node RosTypeNode::make_yaml(const void * memory)
