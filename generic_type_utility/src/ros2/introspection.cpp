@@ -16,9 +16,6 @@
 #include "structure.hpp"
 #include <rclcpp/typesupport_helpers.hpp>
 
-//
-#include <iostream>
-
 namespace generic_type_utility
 {
 

@@ -17,9 +17,6 @@
 #include <memory>
 #include <string>
 
-//
-#include <iostream>
-
 namespace generic_type_utility
 {
 

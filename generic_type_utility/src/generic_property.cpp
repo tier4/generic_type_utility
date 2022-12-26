@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "generic_type_utility/generic_property.hpp"
-#include <iostream>
 
 namespace generic_type_utility
 {

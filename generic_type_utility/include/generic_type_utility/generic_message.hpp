@@ -15,9 +15,9 @@
 #ifndef GENERIC_TYPE_UTILITY__GENERIC_MESSAGE_HPP_
 #define GENERIC_TYPE_UTILITY__GENERIC_MESSAGE_HPP_
 
-#include <generic_type_utility/generic_property.hpp>
-#include <generic_type_utility/ros2/introspection.hpp>
-#include <generic_type_utility/ros2/serialization.hpp>
+#include "generic_type_utility/generic_property.hpp"
+#include "generic_type_utility/ros2/introspection.hpp"
+#include "generic_type_utility/ros2/serialization.hpp"
 #include <string>
 
 namespace generic_type_utility

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <generic_type_utility/generic_message.hpp>
+#include "generic_type_utility/generic_message.hpp"
 #include <rclcpp/rclcpp.hpp>
 #include <gtest/gtest.h>
 using namespace generic_type_utility;  // NOLINT(build/namespaces)
