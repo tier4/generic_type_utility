@@ -7,18 +7,19 @@ if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_EXTENSIONS OFF)
 endif()
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  add_compile_options(-Wall -Wextra -Wpedantic) # -Werror)
+  add_compile_options(-Wall -Wextra -Wpedantic -Werror)
 endif()
 
 find_package(ament_cmake_auto REQUIRED)
 ament_auto_find_build_dependencies()
 
 ament_auto_add_library(${PROJECT_NAME} SHARED
-  src/generic_type_utility.cpp
-  src/impl/library.cpp
-  src/impl/message.cpp
-  src/impl/field.cpp
-  src/impl/convert.cpp
+  src/generic_property.cpp
+  src/generic_message.cpp
+  src/ros2/introspection.cpp
+  src/ros2/serialization.cpp
+  src/ros2/message.cpp
+  src/ros2/structure.cpp
 )
 
 ament_auto_add_executable(print
@@ -33,8 +34,6 @@ if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   ament_lint_auto_find_test_dependencies()
   ament_add_gtest(${PROJECT_NAME}_test test/test.cpp)
-  ament_target_dependencies(${PROJECT_NAME}_test rclcpp)
-  target_include_directories(${PROJECT_NAME}_test PRIVATE include)
   target_link_libraries(${PROJECT_NAME}_test ${PROJECT_NAME})
 endif()
 

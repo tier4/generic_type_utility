@@ -13,16 +13,24 @@
 // limitations under the License.
 
 #include "generic_type_utility/generic_message.hpp"
-#include <iostream>
 
-int main()
+namespace generic_type_utility
 {
-  using generic_type_utility::GenericMessage;
-  using generic_type_utility::GenericProperty;
 
-  const auto message = GenericMessage("std_msgs/msg/Header");
-  const auto property1 = GenericProperty("stamp.nsec");
-  const auto property2 = GenericProperty("stamp.nanosec");
-  std::cout << std::boolalpha << message.validate(property1) << std::endl;
-  std::cout << std::boolalpha << message.validate(property2) << std::endl;
+GenericMessage::GenericMessage(const std::string & type_name) : introspection_(type_name), serialization_(type_name)
+{
 }
+
+bool GenericMessage::validate(const GenericProperty & property) const
+{
+  return introspection_.validate(property);
+}
+
+YAML::Node GenericMessage::deserialize(const rclcpp::SerializedMessage & serialized) const
+{
+  const auto message = introspection_.create_message();
+  serialization_.deserialize(serialized, *message);
+  return introspection_.make_yaml(*message);
+}
+
+}  // namespace generic_type_utility

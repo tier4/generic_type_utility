@@ -1,4 +1,4 @@
-// Copyright 2021 Takagi, Isamu
+// Copyright 2022 Takagi, Isamu
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,33 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef IMPL__MESSAGE_HPP_
-#define IMPL__MESSAGE_HPP_
+#ifndef GENERIC_TYPE_UTILITY__GENERIC_MESSAGE_HPP_
+#define GENERIC_TYPE_UTILITY__GENERIC_MESSAGE_HPP_
 
-#include "util/types.hpp"
+#include "generic_type_utility/generic_property.hpp"
+#include "generic_type_utility/ros2/introspection.hpp"
+#include "generic_type_utility/ros2/serialization.hpp"
 #include <string>
-#include <vector>
 
 namespace generic_type_utility
 {
 
-class TypeSupportMessage
+class GenericMessage
 {
 public:
-  explicit TypeSupportMessage(const IntrospectionMessage * message);
-  explicit TypeSupportMessage(const IntrospectionHandle * handle);
-  ~TypeSupportMessage();
-  const std::string GetTypeName() const;
-  const std::vector<TypeSupportField> & GetFields() const;
-  const TypeSupportField GetField(const std::string name) const;
-  void CreateMemory(void *& data) const;
-  void DeleteMemory(void *& data) const;
+  explicit GenericMessage(const std::string & type);
+  bool validate(const GenericProperty & property) const;
+  YAML::Node deserialize(const rclcpp::SerializedMessage & serialized) const;
 
 private:
-  const IntrospectionMessage * message_;
-  std::vector<TypeSupportField> fields_;
+  RosIntrospection introspection_;
+  RosSerialization serialization_;
 };
 
 }  // namespace generic_type_utility
 
-#endif  // IMPL__MESSAGE_HPP_
+#endif  // GENERIC_TYPE_UTILITY__GENERIC_MESSAGE_HPP_
