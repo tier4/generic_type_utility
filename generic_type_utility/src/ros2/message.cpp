@@ -1,4 +1,4 @@
-// Copyright 2021 Takagi, Isamu
+// Copyright 2022 Takagi, Isamu
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,35 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef IMPL__FIELD_HPP_
-#define IMPL__FIELD_HPP_
-
-#include "util/types.hpp"
-#include <string>
-#include <vector>
+#include "generic_type_utility/ros2/message.hpp"
+#include <cstdlib>
 
 namespace generic_type_utility
 {
 
-class TypeSupportField
+RosMessageDeleter::RosMessageDeleter()
 {
-public:
-  explicit TypeSupportField(const IntrospectionField * field);
-  const std::string GetDataName() const;
-  const std::string GetTypeName() const;
-  uint32_t GetMemoryOffset() const;
-  uint8_t GetTypeID() const;
+  function_ = nullptr;
+  library_ = nullptr;
+}
 
-  bool IsMessage() const;
-  TypeSupportMessage GetMessage() const;
+RosMessageDeleter::RosMessageDeleter(FunctionPointer function, FunctionLibrary library)
+{
+  function_ = function;
+  library_ = library;
+}
 
-  bool IsArray() const;
-  std::vector<const void *> GetConstArray(const void * data) const;
+void RosMessageDeleter::operator()(void * memory) const noexcept
+{
+  function_(memory);
+  std::free(memory);
+}
 
-private:
-  const IntrospectionField * field_;
-};
+void * RosMessageDeleter::Allocate(size_t size)
+{
+  return std::malloc(size);
+}
 
 }  // namespace generic_type_utility
-
-#endif  // IMPL__FIELD_HPP_

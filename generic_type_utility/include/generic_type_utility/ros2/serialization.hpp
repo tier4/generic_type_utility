@@ -1,4 +1,4 @@
-// Copyright 2021 Takagi, Isamu
+// Copyright 2022 Takagi, Isamu
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,19 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GENERIC_TYPE_UTILITY__ERRORS_HPP_
-#define GENERIC_TYPE_UTILITY__ERRORS_HPP_
+#ifndef GENERIC_TYPE_UTILITY__ROS2__SERIALIZATION_HPP_
+#define GENERIC_TYPE_UTILITY__ROS2__SERIALIZATION_HPP_
 
-#include <stdexcept>
+#include "generic_type_utility/ros2/message.hpp"
+#include <memory>
+#include <string>
 
 namespace generic_type_utility
 {
 
-class FieldError : public std::runtime_error
+class RosSerialization final
 {
-  using std::runtime_error::runtime_error;
+public:
+  explicit RosSerialization(const std::string & type_name);
+  ~RosSerialization();
+  void deserialize(const rclcpp::SerializedMessage & serialized, RosMessage & message) const;
+
+private:
+  class Impl;
+  std::unique_ptr<Impl> impl_;
 };
 
 }  // namespace generic_type_utility
 
-#endif  // GENERIC_TYPE_UTILITY__ERRORS_HPP_
+#endif  // GENERIC_TYPE_UTILITY__ROS2__SERIALIZATION_HPP_

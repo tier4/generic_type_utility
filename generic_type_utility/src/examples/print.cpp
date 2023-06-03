@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <generic_type_utility/generic_type_utility.hpp>
+#include "generic_type_utility/generic_message.hpp"
 #include <rclcpp/rclcpp.hpp>
 #include <iostream>
 
-using GenericMessage = generic_type_utility::GenericMessage;
-using GenericAccess = generic_type_utility::GenericMessage::GenericAccess;
+using generic_type_utility::GenericMessage;
+using generic_type_utility::GenericProperty;
 
 class SampleNode : public rclcpp::Node
 {
@@ -25,22 +25,21 @@ public:
   SampleNode() : rclcpp::Node("generic_type_utility")
   {
     const std::string type_name = "std_msgs/msg/Header";
-    message_ = std::make_shared<GenericMessage>(type_name);
-    access_ = message_->GetAccess("stamp.sec");
-    std::cout << "The type of " << access_->GetFullPath() << " is " << access_->GetTypeName() << std::endl;
+    message_ = std::make_unique<GenericMessage>(type_name);
+    property_ = std::make_unique<GenericProperty>("stamp.sec");
 
     const auto callback = [this](const std::shared_ptr<rclcpp::SerializedMessage> serialized)
     {
-      const auto yaml = message_->ConvertYAML(*serialized);
-      const auto node = access_->Access(yaml);
+      const auto yaml = message_->deserialize(*serialized);
+      const auto node = property_->apply(yaml);
       std::cout << node.as<int>() << std::endl;
     };
     sub_ = create_generic_subscription("/message", type_name, rclcpp::QoS(1), callback);
   }
 
 private:
-  std::shared_ptr<GenericMessage> message_;
-  std::shared_ptr<GenericAccess> access_;
+  std::unique_ptr<GenericMessage> message_;
+  std::unique_ptr<GenericProperty> property_;
   rclcpp::GenericSubscription::SharedPtr sub_;
 };
 

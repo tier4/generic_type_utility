@@ -1,4 +1,4 @@
-// Copyright 2021 Takagi, Isamu
+// Copyright 2022 Takagi, Isamu
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,32 +12,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef IMPL__LIBRARY_HPP_
-#define IMPL__LIBRARY_HPP_
+#ifndef GENERIC_TYPE_UTILITY__ROS2__INTROSPECTION_HPP_
+#define GENERIC_TYPE_UTILITY__ROS2__INTROSPECTION_HPP_
 
-#include "util/types.hpp"
-#include <rclcpp/serialization.hpp>
-#include <rclcpp/typesupport_helpers.hpp>
+#include "generic_type_utility/generic_property.hpp"
+#include "generic_type_utility/ros2/message.hpp"
+#include <yaml-cpp/yaml.h>
 #include <memory>
 #include <string>
 
 namespace generic_type_utility
 {
 
-class TypeSupportLibrary
+class RosIntrospection final
 {
 public:
-  TypeSupportLibrary(const std::string & type_name, const std::string & identifier);
-  static TypeSupportLibrary LoadTypeSupport(const std::string & type_name);
-  static TypeSupportLibrary LoadIntrospection(const std::string & type_name);
-  TypeSupportMessage GetMessage() const;
-  rclcpp::SerializationBase CreateSerialization() const;
+  explicit RosIntrospection(const std::string & type_name);
+  ~RosIntrospection();
+  bool validate(const GenericProperty & property) const;
+  std::shared_ptr<RosMessage> create_message() const;
+  YAML::Node make_yaml(RosMessage & message) const;
 
 private:
-  const rosidl_message_type_support_t * handle_;
-  std::shared_ptr<rcpputils::SharedLibrary> library_;
+  class Impl;
+  std::unique_ptr<Impl> impl_;
 };
 
 }  // namespace generic_type_utility
 
-#endif  // IMPL__LIBRARY_HPP_
+#endif  // GENERIC_TYPE_UTILITY__ROS2__INTROSPECTION_HPP_
