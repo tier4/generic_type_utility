@@ -12,6 +12,7 @@ endif()
 
 find_package(ament_cmake_auto REQUIRED)
 ament_auto_find_build_dependencies()
+find_package(yaml-cpp REQUIRED)
 
 ament_auto_add_library(${PROJECT_NAME} SHARED
   src/generic_property.cpp
@@ -21,6 +22,8 @@ ament_auto_add_library(${PROJECT_NAME} SHARED
   src/ros2/message.cpp
   src/ros2/structure.cpp
 )
+
+target_link_libraries(${PROJECT_NAME} yaml-cpp)
 
 ament_auto_add_executable(print
   src/examples/print.cpp
