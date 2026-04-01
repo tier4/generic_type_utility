@@ -33,7 +33,11 @@ RosIntrospection::Impl::Impl(const std::string & type_name)
   constexpr char identifier[] = "rosidl_typesupport_introspection_cpp";
   library_ = rclcpp::get_typesupport_library(type_name, identifier);
 
+#ifdef ROS_DISTRO_HUMBLE
+  const auto handle = rclcpp::get_typesupport_handle(type_name, identifier, *library_);
+#else
   const auto handle = rclcpp::get_message_typesupport_handle(type_name, identifier, *library_);
+#endif
   rostype_ = std::make_unique<RosTypeNode>(nullptr, handle);
 }
 
