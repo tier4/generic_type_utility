@@ -27,8 +27,6 @@ ament_auto_add_library(${PROJECT_NAME} SHARED
 set(ROS_DISTRO $ENV{ROS_DISTRO})
 if(${ROS_DISTRO} STREQUAL "rolling")
   add_compile_definitions(ROS_DISTRO_ROLLING)
-elseif(${ROS_DISTRO} STREQUAL "galactic")
-  add_compile_definitions(ROS_DISTRO_GALACTIC)
 elseif(${ROS_DISTRO} STREQUAL "humble")
   add_compile_definitions(ROS_DISTRO_HUMBLE)
 elseif(${ROS_DISTRO} STREQUAL "jazzy")
