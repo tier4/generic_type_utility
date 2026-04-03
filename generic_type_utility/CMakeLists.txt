@@ -12,6 +12,7 @@ endif()
 
 find_package(ament_cmake_auto REQUIRED)
 ament_auto_find_build_dependencies()
+find_package(yaml-cpp REQUIRED)
 
 ament_auto_add_library(${PROJECT_NAME} SHARED
   src/generic_property.cpp
@@ -21,6 +22,18 @@ ament_auto_add_library(${PROJECT_NAME} SHARED
   src/ros2/message.cpp
   src/ros2/structure.cpp
 )
+
+# Set ROS_DISTRO macros
+set(ROS_DISTRO $ENV{ROS_DISTRO})
+if(${ROS_DISTRO} STREQUAL "rolling")
+  add_compile_definitions(ROS_DISTRO_ROLLING)
+elseif(${ROS_DISTRO} STREQUAL "humble")
+  add_compile_definitions(ROS_DISTRO_HUMBLE)
+elseif(${ROS_DISTRO} STREQUAL "jazzy")
+  add_compile_definitions(ROS_DISTRO_JAZZY)
+endif()
+
+target_link_libraries(${PROJECT_NAME} yaml-cpp)
 
 ament_auto_add_executable(print
   src/examples/print.cpp
